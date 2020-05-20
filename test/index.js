@@ -1,14 +1,16 @@
 const test = require('./test');
-const { get } = require('..');
+const { get, post, ensureStatusCode } = require('..');
 
 (async () => {
 
   await test('tiny-network#get', async () => {
-    await get('https://httpbin.org/get');
+    const res = await get('https://httpbin.org/get');
+    ensureStatusCode(200)(res);
   });
 
   await test('tiny-network#post', async () => {
-    await get('https://httpbin.org/post');
+    const res = await post('https://httpbin.org/post');
+    ensureStatusCode(200)(res);
   });
 
 })();

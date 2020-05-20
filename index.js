@@ -2,6 +2,7 @@ const net = require('net');
 const http = require('http');
 const https = require('https');
 const assert = require('assert');
+const Stream = require('stream');
 
 const request = (method, url, payload, headers) => {
   const client = url.startsWith('https://') ? https : http;
@@ -11,7 +12,11 @@ const request = (method, url, payload, headers) => {
       headers,
     }, resolve);
     req.once('error', reject);
-    req.end(payload);
+    if (payload instanceof Stream) {
+      payload.pipe(req);
+    } else {
+      req.end(payload);
+    }
   });
 };
 
@@ -66,11 +71,18 @@ const cookieJar = (cookies = {}) => {
   };
 };
 
+const stringify = (obj, { encode = encodeURIComponent } = {}) =>
+  Object
+    .keys(obj)
+    .reduce((arr, key) => {
+      const value = obj[key];
+      arr.push(encodeURIComponent(key) + `=${encode(value)}`);
+      return arr;
+    }, []).join('&');
+
 const tcp = (host, port) => {
   return new Promise(resolve => {
-    const socket = net.createConnection({ host, port }, () => {
-      resolve(socket);
-    });
+    const socket = net.createConnection({ host, port }, () => resolve(socket));
   });
 };
 
@@ -82,4 +94,5 @@ module.exports = {
   readStream,
   ensureStatusCode,
   cookieJar,
+  stringify,
 };
