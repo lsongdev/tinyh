@@ -36,6 +36,13 @@ const readStream = stream => {
   });
 };
 
+const getJSON = (url, headers) =>
+  Promise
+    .resolve()
+    .then(() => get(url, headers))
+    .then(readStream)
+    .then(JSON.parse);
+
 const ensureStatusCode = expected => {
   if (!Array.isArray(expected))
     expected = [expected];
@@ -95,4 +102,5 @@ module.exports = {
   ensureStatusCode,
   cookieJar,
   stringify,
+  getJSON,
 };
