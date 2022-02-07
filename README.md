@@ -1,19 +1,19 @@
-## tiny-network
+## tinyh
 
 > super tiny http library
 
-[![Build Status](https://travis-ci.org/song940/tiny-network.svg?branch=master)](https://travis-ci.org/song940/tiny-network)
+[![Build Status](https://travis-ci.org/song940/tinyh.svg?branch=master)](https://travis-ci.org/song940/tinyh)
 
 ### Installation
 
 ```bash
-$ npm install tiny-network
+$ npm install tinyh
 ```
 
 ### Example
 
 ```js
-const { get, readStream } = require('tiny-network');
+const { get, readStream } = require('tinyh');
 
 Promise
 .resolve()
@@ -29,7 +29,7 @@ Promise
 Async/Await
 
 ```js
-const { get, readStream } = require('tiny-network');
+const { get, readStream } = require('tinyh');
 
 (async () => {
 
