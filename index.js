@@ -2,6 +2,7 @@ const http = require('http');
 const https = require('https');
 const assert = require('assert');
 const Stream = require('stream');
+const { buildForm } = require('./form');
 
 const request = (method, url, payload, headers) => {
   const client = url.startsWith('https://') ? https : http;
@@ -67,4 +68,5 @@ module.exports = {
   ensureStatusCode,
   getJSON,
   postJSON,
+  buildForm,
 };
